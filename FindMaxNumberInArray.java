@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class FindMaxNumberInArray{
     public static int findMaxNumber(int[] arr){
         int maxNumber = Integer.MIN_VALUE;
@@ -16,6 +18,14 @@ public class FindMaxNumberInArray{
     }
 
     public static void main(String[] args){
-        System.out.println(findMaxNumber(new int[]{4, 7, 1, 89, 13}));
-    }
+        int[][] testArrays = {
+            {},
+            {5},
+            {5, 5, 5, 5, 5},
+            {9, 0, -1, -12, 6},
+            {3, 9, 12, 5, 18, 67, 32}};
+        for (int[] arr : testArrays){
+            System.out.println("The maximum number in the array " + Arrays.toString(arr) + " is: " +findMaxNumber(arr));
+        }
+    }    
 }
