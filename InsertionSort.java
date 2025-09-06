@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class InsertionSort {
     void sort(int arr[])
     {
@@ -30,11 +32,22 @@ public class InsertionSort {
     // Driver method
     public static void main(String args[])
     {
-        int arr[] = {-1, -2, -3, -4};
+        Random random = new Random();
+        int arraySize = 1000;
+        int[] arr = new int[arraySize];
+
+        for (int i = 0; i < arraySize; i++){
+            arr[i] = random.nextInt(100) - 50; 
+        }
 
         InsertionSort ob = new InsertionSort();
+
+        System.out.print("Original array: ");
+        printArray(arr);
+
         ob.sort(arr);
 
+        System.out.print("Sorted array: ");
         printArray(arr);
     }
 }
