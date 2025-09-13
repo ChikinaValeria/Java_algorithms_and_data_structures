@@ -16,12 +16,9 @@ public class IsSquarePair {
     }
     
     public static boolean isSquarePair(int first, int second){
-        if (first*first == second || second*second == first){
-            return true;
-        }else{
-            return false;
-        }    
-        
+        long firstLong = (long) first;
+        long secondLong = (long) second;
+        return (firstLong*firstLong == secondLong || secondLong*secondLong == firstLong);
     }
 
 }
