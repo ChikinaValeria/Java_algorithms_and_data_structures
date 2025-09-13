@@ -2,8 +2,8 @@ import java.util.Stack;
 
 public class MinimumInStack {
 
-    private final Stack<Integer> mainStack;
-    private final Stack<Integer> minStack;
+    protected final Stack<Integer> mainStack;
+    protected final Stack<Integer> minStack;
 
     public MinimumInStack() {
         mainStack = new Stack<>();
