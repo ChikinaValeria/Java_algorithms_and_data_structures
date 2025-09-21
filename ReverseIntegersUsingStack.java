@@ -6,17 +6,11 @@ public class ReverseIntegersUsingStack {
         Scanner scanner = new Scanner(System.in);
         Stack<Integer> stack = new Stack<>();
 
-        System.out.println("Enter five integers separated by spaces and in the end feed <enter>:");
+        System.out.println("Enter integers separated by spaces and in the end feed <enter>:");
         
         String inputLine = scanner.nextLine();
         String[] numbersAsString = inputLine.split(" ");
         
-        if (numbersAsString.length != 5) {
-            System.out.println("Error: You should enter five integers.");
-            scanner.close();
-            return;
-        }
-
         for (String s : numbersAsString) {
             try {
                 int number = Integer.parseInt(s);
