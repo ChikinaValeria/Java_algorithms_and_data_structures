@@ -1,0 +1,11 @@
+.idea/
+*.iml
+out/
+*.jar
+*.log
+hw_3/.idea/
+hw_3/.iml
+hw_3/out/
+hw_3/.class
+hw_3/.jar
+hw_3/.log
