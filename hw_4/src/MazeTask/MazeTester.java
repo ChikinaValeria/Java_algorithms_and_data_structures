@@ -22,13 +22,17 @@ public class MazeTester
 
         Maze labyrinth = new Maze(filename);
 
+        System.out.println("\n--- Original Maze ---");
         System.out.println(labyrinth);
 
         MazeSolver solver = new MazeSolver(labyrinth);
-        if (solver.traverse())
+        if (solver.traverse()) {
+            System.out.println("\n--- Final Maze State (Solution Found) ---");
             System.out.println("The maze was successfully traversed!");
-        else
+        }else {
+            System.out.println("\n--- Final Maze State (No Solution) ---");
             System.out.println("There is no possible path.");
+        }
         System.out.println(labyrinth);
     }
 }

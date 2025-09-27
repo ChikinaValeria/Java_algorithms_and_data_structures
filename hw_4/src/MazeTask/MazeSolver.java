@@ -32,19 +32,22 @@ public class MazeSolver
      */
     public boolean traverse()
     {
-    boolean done = false;
-    PositionNode pos = new PositionNode(0, 0, null); // Изменено
-    Deque<PositionNode> stack = new LinkedList<PositionNode>(); // Изменено
+        System.out.println("\nStarting maze traversal with a stack...");
+        boolean done = false;
+        PositionNode pos = new PositionNode(0, 0, null);
+        Deque<PositionNode> stack = new LinkedList<PositionNode>();
         stack.push(pos);
 
         while (!(done) && !stack.isEmpty())
     {
         pos = stack.pop();
+        System.out.println("Exploring position: (" + pos.getx() + ", " + pos.gety() + ")");
         maze.tryPosition(pos.getx(), pos.gety());
         if (pos.getx() == maze.getRows() - 1 && pos.gety() == maze.getColumns() - 1)
         {
             done = true;
-            // Начинаем отслеживать путь назад
+            System.out.println("Path found! Tracing back the solution...");
+
             PositionNode current = pos;
             while (current != null) {
                 maze.markPath(current.getx(), current.gety());
@@ -53,20 +56,27 @@ public class MazeSolver
         }
         else
         {
+            System.out.println("  Checking neighbors...");
             push_new_pos(pos.getx() - 1, pos.gety(), stack, pos); // Изменено
             push_new_pos(pos.getx() + 1, pos.gety(), stack, pos); // Изменено
             push_new_pos(pos.getx(), pos.gety() - 1, stack, pos); // Изменено
             push_new_pos(pos.getx(), pos.gety() + 1, stack, pos); // Изменено
         }
     }
+        System.out.println("Traversal finished.");
         return done;
 }
 
-private void push_new_pos(int x, int y, Deque<PositionNode> stack, PositionNode currentParent)
-{
-    if (maze.validPosition(x, y)) {
-        PositionNode npos = new PositionNode(x, y, currentParent); // Изменено
-        stack.push(npos);
+    private void push_new_pos(int x, int y, Deque<PositionNode> stack, PositionNode currentParent)
+    {
+        if (maze.validPosition(x, y)) {
+            PositionNode npos = new PositionNode(x, y, currentParent);
+            stack.push(npos);
+            // Добавлен вывод
+            System.out.println("  Pushed valid position: (" + x + ", " + y + ")");
+        } else {
+            // Добавлен вывод
+            System.out.println("  Position (" + x + ", " + y + ") is invalid.");
+        }
     }
-}
 }
