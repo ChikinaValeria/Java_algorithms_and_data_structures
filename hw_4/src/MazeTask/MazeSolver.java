@@ -62,6 +62,7 @@ public class MazeSolver
             push_new_pos(pos.getx(), pos.gety() - 1, stack, pos); // Изменено
             push_new_pos(pos.getx(), pos.gety() + 1, stack, pos); // Изменено
         }
+        printStackContents(stack);
     }
         System.out.println("Traversal finished.");
         return done;
@@ -72,11 +73,23 @@ public class MazeSolver
         if (maze.validPosition(x, y)) {
             PositionNode npos = new PositionNode(x, y, currentParent);
             stack.push(npos);
-            // Добавлен вывод
             System.out.println("  Pushed valid position: (" + x + ", " + y + ")");
         } else {
-            // Добавлен вывод
             System.out.println("  Position (" + x + ", " + y + ") is invalid.");
         }
+    }
+
+    private void printStackContents(Deque<PositionNode> stack) {
+        System.out.print("Current Stack: [");
+        // Используем итератор для безопасного прохождения по стеку
+        Iterator<PositionNode> iterator = stack.iterator();
+        while (iterator.hasNext()) {
+            PositionNode pos = iterator.next();
+            System.out.print("(" + pos.getx() + "," + pos.gety() + ")");
+            if (iterator.hasNext()) {
+                System.out.print(", ");
+            }
+        }
+        System.out.println("]\n");
     }
 }

@@ -10,6 +10,8 @@ import java.io.*;
  */
 public class MazeTester
 {
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
     /**
      * Creates a new maze, prints its original form, attempts to
      * solve it, and prints out its final form.
