@@ -10,23 +10,22 @@ import java.util.*;
  * @author Lewis and Chase
  * @version 4.0
  */
-public class MazeSolver
-{
+public class MazeSolver {
     private Maze maze;
 
     /**
      * Constructor for the MazeSolver class.
      */
-    public MazeSolver(Maze maze)
-    {
+    public MazeSolver(Maze maze) {
         this.maze = maze;
     }
+
     /**
      * Attempts to traverse the maze using a stack. Inserts special
      * characters indicating locations that have been TRIED and that
      * eventually become part of the solution PATH.
      *
-     * @param row row index of current location
+     * @param row    row index of current location
      * @param column column index of current location
      * @return true if the maze has been solved
      */
@@ -67,8 +66,7 @@ public class MazeSolver
         return done;
     }
 
-    private void push_new_pos(int x, int y, Deque<PositionNode> stack, PositionNode currentParent)
-    {
+    private void push_new_pos(int x, int y, Deque<PositionNode> stack, PositionNode currentParent) {
         if (maze.validPosition(x, y)) {
             PositionNode npos = new PositionNode(x, y, currentParent);
             stack.push(npos);
@@ -80,16 +78,10 @@ public class MazeSolver
 
     private void printStackContents(Deque<PositionNode> stack) {
         System.out.print("Current Stack: [");
-
-        Iterator<PositionNode> iterator = stack.iterator();
-        while (iterator.hasNext()) {
-            PositionNode pos = iterator.next();
+        for (PositionNode pos : stack) {
             System.out.print("(" + pos.getx() + "," + pos.gety() + ")");
-            if (iterator.hasNext()) {
-                System.out.print(", ");
-            }
         }
-        System.out.println("]\n");
+        System.out.println("]");
     }
 
     private void traceAndMarkPath(PositionNode endNode) {
@@ -99,11 +91,6 @@ public class MazeSolver
             System.out.println("Marking path step: (" + current.getx() + ", " + current.gety() + ")");
             System.out.println(maze);
             current = current.getParent();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 }
