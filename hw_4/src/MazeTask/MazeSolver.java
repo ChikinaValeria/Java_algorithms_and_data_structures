@@ -92,4 +92,21 @@ public class MazeSolver
         }
         System.out.println("]\n");
     }
+
+    // Новый метод для пошаговой визуализации обратного хода
+    private void traceAndMarkPath(PositionNode endNode) {
+        PositionNode current = endNode;
+        while (current != null) {
+            maze.markPath(current.getx(), current.gety());
+            System.out.println("Marking path step: (" + current.getx() + ", " + current.gety() + ")");
+            System.out.println(maze);
+            current = current.getParent();
+            try {
+                // Добавим небольшую задержку для лучшей визуализации
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
