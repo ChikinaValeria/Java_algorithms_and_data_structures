@@ -15,11 +15,11 @@ public class Codes
      */
     public static void main(String[] args)
     {
-        int[] key = {5, 12, -3, 8, -9, 4, 10};
+        int[] key = {5, 12, -3, 8, -9, 4, 10,-1, 2, -4, 7, 21, -6, 11, 13, 1, 2, -1, -2, 0};
         Integer keyValue;
         String encoded = "", decoded = "";
         String message = "All programmers are playwrights and all " +
-                "computers are lousy actors.";
+                "computers are lousy actors. This message tests the longer key.";
         Queue<Integer> encodingQueue = new LinkedList<Integer>();
         Queue<Integer> decodingQueue = new LinkedList<Integer>();
 
