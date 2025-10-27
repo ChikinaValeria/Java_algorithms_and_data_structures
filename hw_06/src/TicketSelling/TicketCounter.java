@@ -94,7 +94,7 @@ public class TicketCounter
 
                     writer.flush();
                 }
-                
+
                 averageTime = totalTime / NUM_CUSTOMERS;
                 System.out.println("------------------------------------------------------------------");
                 System.out.println("Simulation results written to " + finalPath);
