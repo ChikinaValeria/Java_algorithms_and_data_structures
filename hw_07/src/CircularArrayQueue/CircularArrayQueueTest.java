@@ -8,9 +8,10 @@ import CircularArrayQueue.exceptions.EmptyCollectionException;
 public class CircularArrayQueueTest {
 
     public static void main(String[] args) {
+        // Create a queue with a small initial capacity to test expandCapacity
         CircularArrayQueue<String> queue = new CircularArrayQueue<>(3);
 
-        System.out.println("Testing CircularArrayQueue");
+        System.out.println("Testing CircularArrayQueue (No Count)");
 
         // 1. Enqueue and check size/toString
         System.out.println("\n1. Testing enqueue:");
@@ -36,12 +37,12 @@ public class CircularArrayQueueTest {
             System.out.println("Error: " + e.getMessage());
         }
 
-        // 4. Testing dequeue
+        // 4. Testing dequeue (to demonstrate wrap-around potential)
         System.out.println("\n4. Testing dequeue:");
         try {
             String removed1 = queue.dequeue();
             String removed2 = queue.dequeue();
-            System.out.println("Removed A, then B.");
+            System.out.println("Removed " + removed1 + ", then " + removed2 + ".");
             System.out.println("Queue after 2 dequeues: " + queue);
             System.out.println("Size: " + queue.size());
         } catch (EmptyCollectionException e) {
@@ -53,6 +54,7 @@ public class CircularArrayQueueTest {
         queue.enqueue("E");
         queue.enqueue("F");
         System.out.println("Queue after enqueue E and F: " + queue);
+        System.out.println("Size: " + queue.size());
 
         // 6. Testing isEmpty
         System.out.println("\n6. Testing isEmpty:");
