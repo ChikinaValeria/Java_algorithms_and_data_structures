@@ -9,6 +9,7 @@ package Recursion;
 public class TowersOfHanoi
 {
     private int totalDisks;
+    private int moveCount;
 
     /**
      * Sets up the puzzle with the specified number of disks.
@@ -18,6 +19,7 @@ public class TowersOfHanoi
     public TowersOfHanoi(int disks)
     {
         totalDisks = disks;
+        moveCount = 0;
     }
 
     /**
@@ -27,6 +29,7 @@ public class TowersOfHanoi
     public void solve()
     {
         moveTower(totalDisks, 1, 3, 2);
+        System.out.println("Total moves: " + moveCount);
     }
     /**
      * Moves the specified number of disks from one tower to another
@@ -59,5 +62,6 @@ public class TowersOfHanoi
     private void moveOneDisk(int start, int end)
     {
         System.out.println("Move one disk from " + start + " to " + end);
+        moveCount++;
     }
 }

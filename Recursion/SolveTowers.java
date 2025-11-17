@@ -13,7 +13,7 @@ public class SolveTowers
      */
     public static void main(String[] args)
     {
-        TowersOfHanoi towers = new TowersOfHanoi(4);
+        TowersOfHanoi towers = new TowersOfHanoi(6);
         towers.solve();
     }
 }
