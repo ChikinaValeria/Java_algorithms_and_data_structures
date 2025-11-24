@@ -1,6 +1,7 @@
 package SortAndSearch;
 
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class SortAndSearchTester {
 
@@ -13,7 +14,7 @@ public class SortAndSearchTester {
 
             choice = scanner.nextLine().trim();
 
-            processChoice(choice);
+            processChoice(choice, scanner);
             System.out.println();
         }
 
@@ -35,12 +36,10 @@ public class SortAndSearchTester {
         System.out.print("Your choice: ");
     }
 
-    public static void processChoice(String choiceStr) {
+    public static void processChoice(String choiceStr, Scanner scanner) {
         switch (choiceStr.toLowerCase()) {
             case "1":
-                System.out.println("Selected Option 1: 1) Linear searching.");
-                System.out.println("This section is not implemented yet.");
-                // Function call for option 1 will go here
+                handleLinearSearch(scanner);
                 break;
             case "2":
                 System.out.println("This section is not implemented yet.");
@@ -59,6 +58,23 @@ public class SortAndSearchTester {
             default:
                 System.out.println("Error: Unknown option. Please enter a number from 1 to 5 or 'Q'.");
                 break;
+        }
+
+
+    }
+
+    private static void handleLinearSearch(Scanner scanner) {
+        System.out.print("In the list are values 0, ..., 9; which value would you like to search with linear search? ");
+
+        try {
+            int target = scanner.nextInt();
+            String result = LinearSearch.search(target);
+            System.out.println(result);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input. Please enter an integer value.");
+        } finally {
+            scanner.nextLine();
         }
     }
 }
