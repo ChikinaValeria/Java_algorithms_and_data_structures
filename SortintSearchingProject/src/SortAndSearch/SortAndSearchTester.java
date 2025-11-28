@@ -42,7 +42,7 @@ public class SortAndSearchTester {
                 handleLinearSearch(scanner);
                 break;
             case "2":
-                System.out.println("This section is not implemented yet.");
+                handleBinarySearch(scanner);;
                 break;
             case "3":
                 System.out.println("This section is not implemented yet.");
@@ -74,6 +74,23 @@ public class SortAndSearchTester {
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input. Please enter an integer value.");
         } finally {
+            scanner.nextLine();
+        }
+    }
+
+    private static void handleBinarySearch(Scanner scanner) {
+        System.out.print("In the list are values 0, ..., 9; which value would you like to search with binary search? ");
+
+        try {
+            int target = scanner.nextInt();
+            // Вызов метода search из рекурсивного класса BinarySearch
+            String result = BinarySearch.search(target);
+            System.out.println(result);
+
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input. Please enter an integer value.");
+        } finally {
+            // Очистка буфера сканера после nextInt()
             scanner.nextLine();
         }
     }
