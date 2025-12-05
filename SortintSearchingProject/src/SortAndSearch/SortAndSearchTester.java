@@ -2,6 +2,8 @@ package SortAndSearch;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Random;
+import java.util.Arrays;
 
 public class SortAndSearchTester {
 
@@ -45,7 +47,7 @@ public class SortAndSearchTester {
                 handleBinarySearch(scanner);;
                 break;
             case "3":
-                System.out.println("This section is not implemented yet.");
+                handleBubbleSort();
                 break;
             case "4":
                 System.out.println("This section is not implemented yet.");
@@ -83,15 +85,54 @@ public class SortAndSearchTester {
 
         try {
             int target = scanner.nextInt();
-            // Вызов метода search из рекурсивного класса BinarySearch
             String result = BinarySearch.search(target);
             System.out.println(result);
 
         } catch (InputMismatchException e) {
             System.out.println("Error: Invalid input. Please enter an integer value.");
         } finally {
-            // Очистка буфера сканера после nextInt()
             scanner.nextLine();
         }
+    }
+
+    private static int[] generateRandomIntArray(int size, int maxBound) {
+        Random rand = new Random();
+        int[] data = new int[size];
+
+        // This sets up the range. If maxBound is 100, we get numbers from -50 to 49.
+        // We subtract the 'offset' (half of maxBound) to shift the range into negative values.
+        // If maxBound is 100, the offset is 50.
+        int offset = maxBound / 2;
+
+        for (int i = 0; i < size; i++) {
+            // rand.nextInt(maxBound) creates a number from 0 up to (maxBound - 1).
+            // Subtracting the offset shifts the range to include negative numbers.
+            data[i] = rand.nextInt(maxBound) - offset;
+        }
+        return data;
+    }
+
+    private static void printArray(int[] data) {
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i]);
+            if (i < data.length - 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+    }
+
+    private static void handleBubbleSort() {
+        int[] data = generateRandomIntArray(10, 200);
+
+        System.out.println();
+        System.out.println("Data set before bubble sorting:");
+        printArray(data);
+        System.out.println();
+
+        BubbleSort.sort(data);
+
+        System.out.println("Data set after bubble sorting:");
+        printArray(data);
     }
 }
