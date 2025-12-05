@@ -50,7 +50,7 @@ public class SortAndSearchTester {
                 handleBubbleSort();
                 break;
             case "4":
-                System.out.println("This section is not implemented yet.");
+                handleMergeSort();
                 break;
             case "5":
                 System.out.println("This section is not implemented yet.");
@@ -99,14 +99,14 @@ public class SortAndSearchTester {
         Random rand = new Random();
         int[] data = new int[size];
 
-        // This sets up the range. If maxBound is 100, we get numbers from -50 to 49.
-        // We subtract the 'offset' (half of maxBound) to shift the range into negative values.
-        // If maxBound is 100, the offset is 50.
+        // This sets up the range. If maxBound is 100, we get numbers from -50 to 49
+        // We subtract the 'offset' (half of maxBound) to shift the range into negative values
+        // If maxBound is 100, the offset is 50
         int offset = maxBound / 2;
 
         for (int i = 0; i < size; i++) {
-            // rand.nextInt(maxBound) creates a number from 0 up to (maxBound - 1).
-            // Subtracting the offset shifts the range to include negative numbers.
+            // rand.nextInt(maxBound) creates a number from 0 up to (maxBound - 1)
+            // Subtracting the offset shifts the range to include negative numbers
             data[i] = rand.nextInt(maxBound) - offset;
         }
         return data;
@@ -133,6 +133,20 @@ public class SortAndSearchTester {
         BubbleSort.sort(data);
 
         System.out.println("Data set after bubble sorting:");
+        printArray(data);
+    }
+
+    private static void handleMergeSort() {
+        int[] data = generateRandomIntArray(10, 200);
+
+        System.out.println();
+        System.out.println("Data set before merge sorting:");
+        printArray(data);
+        System.out.println();
+
+        MergeSort.sort(data);
+
+        System.out.println("Data set after merge sorting:");
         printArray(data);
     }
 }

@@ -12,7 +12,7 @@ public class BinarySearch {
 
     private static boolean recursiveSearch(int[] data, int min, int max, int target) {
 
-        // Base case: If the 'min' index crosses the 'max' index, the element is not found.
+        // Base case: If the 'min' index crosses the 'max' index, the element is not found
         if (min > max) {
             return false;
         }
