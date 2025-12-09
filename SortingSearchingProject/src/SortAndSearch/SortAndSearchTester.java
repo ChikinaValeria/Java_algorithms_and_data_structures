@@ -134,6 +134,15 @@ public class SortAndSearchTester {
 
         System.out.println("Data set after bubble sorting:");
         printArray(data);
+
+        // Selection Sort Test
+        System.out.println();
+        System.out.println("!!!Selection Sort!!!");
+        System.out.println("Original data for selection sorting:");
+        printArray(dataSelection);
+        SelectionSort.sort(dataSelection);
+        System.out.println("Data set after selection sorting:");
+        printArray(dataSelection);
     }
 
     private static void handleMergeSort() {
@@ -148,5 +157,14 @@ public class SortAndSearchTester {
 
         System.out.println("Data set after merge sorting:");
         printArray(data);
+
+        // Quick Sort Test
+        System.out.println();
+        System.out.println("!!!Quick Sort!!!");
+        System.out.println("Original data for quick sorting:");
+        printArray(dataQuick);
+        QuickSort.sort(dataQuick);
+        System.out.println("Data set after quick sorting:");
+        printArray(dataQuick);
     }
 }
