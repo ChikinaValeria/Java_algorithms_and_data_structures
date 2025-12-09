@@ -53,7 +53,7 @@ public class SortAndSearchTester {
                 handleMergeSort();
                 break;
             case "5":
-                System.out.println("This section is not implemented yet.");
+                handleSortingPerformance();
                 break;
             case "q":
                 break;
@@ -112,7 +112,7 @@ public class SortAndSearchTester {
         return data;
     }
 
-    private static void printArray(int[] data) {
+    /*private static void printArray(int[] data) {
         for (int i = 0; i < data.length; i++) {
             System.out.print(data[i]);
             if (i < data.length - 1) {
@@ -121,10 +121,10 @@ public class SortAndSearchTester {
         }
         System.out.println();
     }
-
+*/
     private static void handleBubbleSort() {
         int[] data = generateRandomIntArray(10, 200);
-        int[] dataSelection = Arrays.copyOf(data, data.length);
+        //int[] dataSelection = Arrays.copyOf(data, data.length);
 
         System.out.println();
         System.out.println("Data set before bubble sorting:");
@@ -137,18 +137,20 @@ public class SortAndSearchTester {
         printArray(data);
 
         // Selection Sort Test
+        /*
         System.out.println();
         System.out.println("!!!Selection Sort!!!");
         System.out.println("Original data for selection sorting:");
         printArray(dataSelection);
         SelectionSort.sort(dataSelection);
         System.out.println("Data set after selection sorting:");
-        printArray(dataSelection);
+        printArray(dataSelection);*/
     }
 
     private static void handleMergeSort() {
         int[] data = generateRandomIntArray(10, 200);
-        int[] dataQuick = Arrays.copyOf(data, data.length);
+        //int[] dataQuick = Arrays.copyOf(data, data.length);
+
 
         System.out.println();
         System.out.println("Data set before merge sorting:");
@@ -161,12 +163,124 @@ public class SortAndSearchTester {
         printArray(data);
 
         // Quick Sort Test
-        System.out.println();
+        /*System.out.println();
         System.out.println("!!!Quick Sort!!!");
         System.out.println("Original data for quick sorting:");
         printArray(dataQuick);
         QuickSort.sort(dataQuick);
         System.out.println("Data set after quick sorting:");
-        printArray(dataQuick);
+        printArray(dataQuick);*/
+    }
+
+    /**
+     * Generates a random array of CountedInts.
+     * Note: This method must be static to be used by the static main method.
+     */
+    private static CountedInt[] generateRandomCountedIntArray(int size, int maxBound) {
+        Random rand = new Random();
+        CountedInt[] data = new CountedInt[size];
+        int offset = maxBound / 2;
+
+        for (int i = 0; i < size; i++) {
+            data[i] = new CountedInt(rand.nextInt(maxBound) - offset);
+        }
+        return data;
+    }
+
+    /**
+     * Helper to clone a CountedInt array
+     */
+    private static CountedInt[] cloneArray(CountedInt[] original) {
+        CountedInt[] clone = new CountedInt[original.length];
+        // We need a deep copy of the objects themselves, not just the references
+        for (int i = 0; i < original.length; i++) {
+            clone[i] = new CountedInt(original[i].getValue());
+        }
+        return clone;
+    }
+
+    // You may also want to update your old printArray to handle CountedInt (optional, but cleaner)
+    private static void printArray(CountedInt[] data) {
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i].getValue());
+            if (i < data.length - 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+    }
+
+    // Overload for the old method that uses int[]
+    private static void printArray(int[] data) {
+        // existing implementation remains
+        for (int i = 0; i < data.length; i++) {
+            System.out.print(data[i]);
+            if (i < data.length - 1) {
+                System.out.print(" ");
+            }
+        }
+        System.out.println();
+    }
+
+    private static void handleSortingPerformance() {
+        int[] sizes = {1000, 2000, 4000, 8000, 16000, 32000};
+        int maxBound = 100000; // Large range for variety
+
+        System.out.println("Size, Algorithm, Order, Metric, Value");
+
+        for (int size : sizes) {
+            // 1. Generate the initial random data set
+            CountedInt[] originalData = generateRandomCountedIntArray(size, maxBound);
+
+            // 2. Test Bubble Sort
+            testSortAlgorithm(size, "BubbleSort", originalData, (arr) -> BubbleSort.sort(arr));
+
+            // 3. Test Selection Sort
+            testSortAlgorithm(size, "SelectionSort", originalData, (arr) -> SelectionSort.sort(arr));
+
+            // 4. Test Merge Sort
+            testSortAlgorithm(size, "MergeSort", originalData, (arr) -> MergeSort.sort(arr));
+
+            // 5. Test Quick Sort
+            testSortAlgorithm(size, "QuickSort", originalData, (arr) -> QuickSort.sort(arr));
+        }
+    }
+
+    /**
+     * A functional interface for a sorting method that takes a CountedInt array.
+     */
+    @FunctionalInterface
+    interface SortMethod {
+        void sort(CountedInt[] data);
+    }
+
+    /**
+     * Executes the sorting, monitors time and comparisons, and prints the results.
+     */
+    private static void testSortAlgorithm(int size, String algoName, CountedInt[] originalData, SortMethod sortFunc) {
+        // Deep clone the original array to ensure each sort starts with the same data
+        CountedInt[] data = cloneArray(originalData);
+
+        // Reset the counter before starting the sort
+        CountedInt.resetCounter();
+
+        // Record start time using System.nanoTime() for high precision
+        long startTime = System.nanoTime();
+
+        // Execute the sort function
+        sortFunc.sort(data);
+
+        // Record end time and calculate elapsed milliseconds
+        long endTime = System.nanoTime();
+        long durationMs = (endTime - startTime) / 1_000_000;
+
+        // Get the total comparison count
+        long comparisons = CountedInt.getComparisonCount();
+
+        // Print results in the requested format
+        // Example: 1000, BubbleSort, random, comparisons, 990000
+        System.out.printf("%d, %s, random, comparisons, %d%n", size, algoName, comparisons);
+        // Example: 1000, BubbleSort, random, ms, 23
+        System.out.printf("%d, %s, random, ms, %d%n", size, algoName, durationMs);
     }
 }
