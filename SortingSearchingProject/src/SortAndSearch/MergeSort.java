@@ -8,12 +8,12 @@ public class MergeSort {
      * @param data The array of CountedInt objects to be sorted.
      */
     public static void sort(CountedInt[] data) {
-        // call the main recursive sort method with the full array range.
+        // call the main recursive sort method with the full array range
         mergeSort(data, 0, data.length - 1);
     }
 
     private static void mergeSort(CountedInt[] data, int low, int high) {
-        // Base case: the sub-array has 1 or 0 elements, which means it's already sorted.
+        // Base case: the sub-array has 1 or 0 elements, which means it's already sorted
         if (low < high) {
             // find the middle point of the sub-array
             int mid = low + (high - low) / 2;
@@ -75,8 +75,9 @@ public class MergeSort {
             k++;
         }
     }
+
     /**
-     * Sorts the array using the Merge Sort algorithm (for simple demonstration).
+     * Sorts the array using the Merge Sort algorithm.
      * @param data The array of integers to be sorted.
      */
     public static void sort(int[] data) {

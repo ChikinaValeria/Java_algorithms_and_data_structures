@@ -112,19 +112,8 @@ public class SortAndSearchTester {
         return data;
     }
 
-    /*private static void printArray(int[] data) {
-        for (int i = 0; i < data.length; i++) {
-            System.out.print(data[i]);
-            if (i < data.length - 1) {
-                System.out.print(" ");
-            }
-        }
-        System.out.println();
-    }
-*/
     private static void handleBubbleSort() {
         int[] data = generateRandomIntArray(10, 200);
-        //int[] dataSelection = Arrays.copyOf(data, data.length);
 
         System.out.println();
         System.out.println("Data set before bubble sorting:");
@@ -135,22 +124,10 @@ public class SortAndSearchTester {
 
         System.out.println("Data set after bubble sorting:");
         printArray(data);
-
-        // Selection Sort Test
-        /*
-        System.out.println();
-        System.out.println("!!!Selection Sort!!!");
-        System.out.println("Original data for selection sorting:");
-        printArray(dataSelection);
-        SelectionSort.sort(dataSelection);
-        System.out.println("Data set after selection sorting:");
-        printArray(dataSelection);*/
     }
 
     private static void handleMergeSort() {
         int[] data = generateRandomIntArray(10, 200);
-        //int[] dataQuick = Arrays.copyOf(data, data.length);
-
 
         System.out.println();
         System.out.println("Data set before merge sorting:");
@@ -161,21 +138,9 @@ public class SortAndSearchTester {
 
         System.out.println("Data set after merge sorting:");
         printArray(data);
-
-        // Quick Sort Test
-        /*System.out.println();
-        System.out.println("!!!Quick Sort!!!");
-        System.out.println("Original data for quick sorting:");
-        printArray(dataQuick);
-        QuickSort.sort(dataQuick);
-        System.out.println("Data set after quick sorting:");
-        printArray(dataQuick);*/
     }
 
-    /**
-     * Generates a random array of CountedInts.
-     * Note: This method must be static to be used by the static main method.
-     */
+    //Generates a random array of CountedInts.
     private static CountedInt[] generateRandomCountedIntArray(int size, int maxBound) {
         Random rand = new Random();
         CountedInt[] data = new CountedInt[size];
@@ -199,20 +164,7 @@ public class SortAndSearchTester {
         return clone;
     }
 
-    // You may also want to update your old printArray to handle CountedInt (optional, but cleaner)
-    private static void printArray(CountedInt[] data) {
-        for (int i = 0; i < data.length; i++) {
-            System.out.print(data[i].getValue());
-            if (i < data.length - 1) {
-                System.out.print(" ");
-            }
-        }
-        System.out.println();
-    }
-
-    // Overload for the old method that uses int[]
     private static void printArray(int[] data) {
-        // existing implementation remains
         for (int i = 0; i < data.length; i++) {
             System.out.print(data[i]);
             if (i < data.length - 1) {
@@ -224,26 +176,69 @@ public class SortAndSearchTester {
 
     private static void handleSortingPerformance() {
         int[] sizes = {1000, 2000, 4000, 8000, 16000, 32000};
-        int maxBound = 100000; // Large range for variety
+        String[] algorithms = {"BubbleSort", "SelectionSort", "MergeSort", "QuickSort"};
+        int maxBound = 100000;
 
-        System.out.println("Size, Algorithm, Order, Metric, Value");
+        // Structure for storing all results: [Algorithm][Metric (0:comp, 1:ms)][Size]
+        // 4 algorithms * 2 metrics = 8 data rows
+        long[][] comparisonResults = new long[algorithms.length * 2][sizes.length];
 
-        for (int size : sizes) {
-            // 1. Generate the initial random data set
+        // data collection
+        for (int i = 0; i < sizes.length; i++) {
+            int size = sizes[i];
             CountedInt[] originalData = generateRandomCountedIntArray(size, maxBound);
 
-            // 2. Test Bubble Sort
-            testSortAlgorithm(size, "BubbleSort", originalData, (arr) -> BubbleSort.sort(arr));
-
-            // 3. Test Selection Sort
-            testSortAlgorithm(size, "SelectionSort", originalData, (arr) -> SelectionSort.sort(arr));
-
-            // 4. Test Merge Sort
-            testSortAlgorithm(size, "MergeSort", originalData, (arr) -> MergeSort.sort(arr));
-
-            // 5. Test Quick Sort
-            testSortAlgorithm(size, "QuickSort", originalData, (arr) -> QuickSort.sort(arr));
+            testAndStore(size, originalData, BubbleSort::sort, comparisonResults, 0, 1, i);
+            testAndStore(size, originalData, SelectionSort::sort, comparisonResults, 2, 3, i);
+            testAndStore(size, originalData, MergeSort::sort, comparisonResults, 4, 5, i);
+            testAndStore(size, originalData, QuickSort::sort, comparisonResults, 6, 7, i);
         }
+
+        // formatted table output
+        System.out.println();
+        System.out.printf("%-35s", "");
+        for (int size : sizes) {
+            System.out.printf("%15d", size);
+        }
+        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------");
+
+        String[] rowNames = {
+                "BubbleSort,random,comparisons", "BubbleSort,random,ms",
+                "SelectionSort,random,comparisons", "SelectionSort,random,ms",
+                "MergeSort,random,comparisons", "MergeSort,random,ms",
+                "QuickSort,random,comparisons", "QuickSort,random,ms"
+        };
+
+        // Indices in the comparisonResults array corresponding to the desired display order
+        // Bubble (0,1) -> Selection (2,3) -> Merge (4,5) -> Quick (6,7)
+        int[] displayIndices = {0, 1, 2, 3, 4, 5, 6, 7};
+
+        for (int i = 0; i < rowNames.length; i++) {
+            int rowIdx = displayIndices[i];
+            System.out.printf("%-35s", rowNames[rowIdx]);
+
+            for (int j = 0; j < sizes.length; j++) {
+                System.out.printf("%15d", comparisonResults[rowIdx][j]);
+            }
+            System.out.println();
+        }
+    }
+
+    // helper method for sorting and saving results
+    private static void testAndStore(int size, CountedInt[] originalData, SortMethod sortFunc, long[][] results, int compRow, int msRow, int sizeCol) {
+        CountedInt[] data = cloneArray(originalData);
+        CountedInt.resetCounter();
+
+        long startTime = System.nanoTime();
+        sortFunc.sort(data);
+        long endTime = System.nanoTime();
+
+        long durationMs = (endTime - startTime) / 1_000_000;
+        long comparisons = CountedInt.getComparisonCount();
+
+        results[compRow][sizeCol] = comparisons;
+        results[msRow][sizeCol] = durationMs;
     }
 
     /**
@@ -277,10 +272,7 @@ public class SortAndSearchTester {
         // Get the total comparison count
         long comparisons = CountedInt.getComparisonCount();
 
-        // Print results in the requested format
-        // Example: 1000, BubbleSort, random, comparisons, 990000
         System.out.printf("%d, %s, random, comparisons, %d%n", size, algoName, comparisons);
-        // Example: 1000, BubbleSort, random, ms, 23
         System.out.printf("%d, %s, random, ms, %d%n", size, algoName, durationMs);
     }
 }

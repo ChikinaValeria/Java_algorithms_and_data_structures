@@ -17,7 +17,6 @@ public class CountedInt implements Comparable<CountedInt> {
         comparisonCount = 0;
     }
 
-
      //Returns the current total comparison count
     public static long getComparisonCount() {
         return comparisonCount;

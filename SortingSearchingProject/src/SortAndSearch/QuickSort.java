@@ -48,6 +48,7 @@ public class QuickSort {
 
         return i + 1; // Return the pivot's new position
     }
+
     /**
      * Sorts the array using the Quick Sort algorithm (for simple demonstration).
      * @param data The array of integers to be sorted.
@@ -65,20 +66,18 @@ public class QuickSort {
     }
 
     private static int partition(int[] data, int low, int high) {
-        int pivot = data[high]; // Прямой int pivot
+        int pivot = data[high];
         int i = (low - 1);
 
         for (int j = low; j < high; j++) {
-            if (data[j] <= pivot) { // Прямое сравнение int
+            if (data[j] <= pivot) {
                 i++;
-                // Прямой обмен int
                 int temp = data[i];
                 data[i] = data[j];
                 data[j] = temp;
             }
         }
 
-        // Прямой обмен int
         int temp = data[i + 1];
         data[i + 1] = data[high];
         data[high] = temp;

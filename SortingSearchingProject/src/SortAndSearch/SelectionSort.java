@@ -26,6 +26,8 @@ public class SelectionSort {
             data[i] = temp;
         }
     }
+
+
     /**
      * Sorts the array using the Selection Sort algorithm (for simple demonstration).
      * @param data The array of integers to be sorted.
