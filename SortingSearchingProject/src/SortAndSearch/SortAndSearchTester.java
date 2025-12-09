@@ -124,6 +124,7 @@ public class SortAndSearchTester {
 
     private static void handleBubbleSort() {
         int[] data = generateRandomIntArray(10, 200);
+        int[] dataSelection = Arrays.copyOf(data, data.length);
 
         System.out.println();
         System.out.println("Data set before bubble sorting:");
@@ -147,6 +148,7 @@ public class SortAndSearchTester {
 
     private static void handleMergeSort() {
         int[] data = generateRandomIntArray(10, 200);
+        int[] dataQuick = Arrays.copyOf(data, data.length);
 
         System.out.println();
         System.out.println("Data set before merge sorting:");
